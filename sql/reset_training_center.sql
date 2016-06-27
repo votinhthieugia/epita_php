@@ -30,9 +30,9 @@ BEGIN
     (2, 'Bonjour');
     
     INSERT INTO project(project_id, owner_id, class_id, title, subject, created_at, deadline) VALUES
-    (1, 7, 1, 'Algorithm', 'Basic Algorithm', NOW(), Date_add(NOW(), interval 15 DAY)),
-    (2, 7, 1, 'C Programming', 'C Advanced', NOW(), Date_add(NOW(), interval 30 DAY)),
-    (3, 8, 2, 'Java', 'Advanced JAVA', NOW(), Date_add(NOW(), interval 30 DAY));
+    (1, 7, 1, 'Algorithm', 'Basic Algorithm', NOW(), Date_ADD(NOW(), INTERVAL 15 DAY)),
+    (2, 7, 1, 'C Programming', 'C Advanced', NOW(), Date_ADD(NOW(), INTERVAL 30 DAY)),
+    (3, 8, 2, 'Java', 'Advanced JAVA', NOW(), Date_ADD(NOW(), INTERVAL 30 DAY));
     
     INSERT INTO team(team_id, project_id, owner_id, created_at) VALUES 
     (1, 1, 1, NOW()),
