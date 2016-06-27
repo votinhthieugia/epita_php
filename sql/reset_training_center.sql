@@ -46,4 +46,8 @@ BEGIN
     (3, 1),
 	(4, 6),
     (4, 3);
+    
+    INSERT INTO class_member(person_id, class_id) VALUES
+    (1, 1),
+    (2, 2);
 END
