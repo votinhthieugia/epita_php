@@ -1,3 +1,6 @@
+DELIMITER $
+
+DROP PROCEDURE IF EXISTS reset_training_center $
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_training_center`()
 BEGIN
 	-- Empty tables and reset increments
@@ -50,4 +53,4 @@ BEGIN
     INSERT INTO class_member(person_id, class_id) VALUES
     (1, 1),
     (2, 2);
-END
+END $
