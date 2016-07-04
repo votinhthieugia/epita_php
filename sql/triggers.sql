@@ -37,3 +37,27 @@ BEGIN
  END IF;
 END $
 
+DROP TRIGGER IF EXISTS before_add_team_member $
+CREATE TRIGGER before_add_team_member
+BEFORE INSERT
+ON team_member
+FOR EACH ROW
+BEGIN
+IF(
+	SELECT COUNT(*) FROM class_member
+    WHERE class_member = NEW.student_id AND
+    class_id = 
+    (
+		SELECT class_id FROM project  
+		WHERE project_id = 
+		(
+			SELECT t.project_id FROM team t
+			WHERE NEW.team_id = t.team_id
+		)
+	)
+ ) = 0     
+ THEN
+	SIGNAL SQLSTATE '45000'
+	SET MESSAGE_TEXT='The member is not part of the project\'s class', MYSQL_ERRNO=3002;
+ END IF;
+END $
