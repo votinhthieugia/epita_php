@@ -21,13 +21,14 @@ class RestApiCall {
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     $response = curl_exec($ch);
+    $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     if ($response === false) {
       $info = curl_getinfo($ch);
       curl_close($ch);
       return false;
     }
     curl_close($ch);
-    return true;
+    return $response;
   }
 
   public static function do_put($url, $data) {
@@ -46,17 +47,19 @@ class RestApiCall {
   }
 
   public static function do_delete($url, $data) {
-    $curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-    $response = curl_exec($curl);
-    if ($curl_response === false) {
-      $info = curl_getinfo($curl);
-      curl_close($curl);
+    print $data;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    $response = curl_exec($ch);
+    print $response;
+    if ($response === false) {
+      $info = curl_getinfo($ch);
+      curl_close($ch);
       return false;
     }
-    curl_close($curl);
+    curl_close($ch);
     return true;
   }
 }

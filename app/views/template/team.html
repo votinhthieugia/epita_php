@@ -6,6 +6,11 @@
       <th>Owner Id</td>
       <th>Summary</td>
       <th>Created At</td>
+      <th>Member</td>
+      <?php
+      if ($is_all == true) {?>
+      <th>Detail</td>
+      <?php } ?>
     </tr>
   </thead>
   <tbody>
@@ -16,6 +21,23 @@
       foreach($columns as $col) {
         print "<td>";
         print $team[$i][$col];
+        print "</td>";
+      }
+
+      print "<td>";
+      $member = $members[$i];
+      $count = count($member);
+      for ($j = 0; $j < $count; $j++) {
+        print $member[$j]["first_name"];
+        if ($j < $count - 1) {
+          print ", ";
+        }
+      }
+      print "</td>";
+      if ($is_all) {
+        print "<td>";?>
+          <a href="http://localhost/epita_php/app/views/TeamView.php?id=<?= $team[$i]['team_id'] ?>">Detail</a>
+        <?php
         print "</td>";
       }
       print "</tr>";

@@ -36,13 +36,13 @@ class PersonResource extends HttpResource {
     try {
       $db = DemoDB::getConnection();
       if($this->id == -1){
-		$sql = "SELECT * FROM person";  
-		$stmt = $db->prepare($sql);
-	  }else{
-		$sql = "SELECT * FROM person WHERE person_id=:id";  
-		$stmt = $db->prepare($sql);
-		$stmt->bindValue(":id", $this->id);
-	  }
+        $sql = "SELECT * FROM person";  
+        $stmt = $db->prepare($sql);
+      }else{
+        $sql = "SELECT * FROM person WHERE person_id=:id";  
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":id", $this->id);
+      }
       //$stmt = $db->prepare($sql);
       //$stmt->bindValue(":projectId", $this->id);
       $ok = $stmt->execute();
