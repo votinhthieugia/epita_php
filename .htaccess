@@ -1,0 +1,13 @@
+# Send all responses in utf-8
+AddDefaultCharset utf-8
+# Allow directory browsing
+Options +Indexes
+
+#Use url rewriting
+RewriteEngine on
+# Base directory for rewritng
+RewriteBase /
+# Example
+#RewriteRule ^PHP_tutorial/favourite-dish$ PHP_tutorial/03-standard-form.php
+#RewriteRule ^PHP_tutorial/person-(.*)$ PHP_tutorial/PersonResource.php?id=$1
+
