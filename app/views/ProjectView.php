@@ -1,9 +1,9 @@
 <?php
 
 //DEBUG
-//require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
-//$handler = PhpConsole\Handler::getInstance();
-//$handler->start();
+require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
+$handler = PhpConsole\Handler::getInstance();
+$handler->start();
 
 $messages = array();
 
@@ -23,7 +23,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 function get_project_info() {
 	
 	$context = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
-	$response = json_decode(file_get_contents('http://localhost/PROJ/ProjectResource.php',false,$context));	
+	$response = json_decode(file_get_contents('http://localhost/app/resources/ProjectResource.php',false,$context));	
 	$columns = ['project_id', 'owner_id', 'class_id', 'title', 'created_at', 'deadline', 'subject'];
 	
   print <<<END_FORM
@@ -49,7 +49,7 @@ END_FORM;
 
 	foreach($response as $item) {
 		print "<tr>";
-		$teams = json_decode(file_get_contents('http://localhost/PROJ/TeamResource.php?project_id='.$item->project_id, false, $context));
+		$teams = json_decode(file_get_contents('http://localhost/app/resources/TeamResource.php?project_id='.$item->project_id, false, $context));
 		foreach($columns as $col) { 
 			print "<td>";
 			print $item->$col;
@@ -58,7 +58,7 @@ END_FORM;
 		print "<td>";
 		if (isset($teams))
 			foreach($teams as $team) { 
-				print "<a href=\"http://localhost/PROJ/TeamResource.php?id=" . $team->team_id . "\">";
+				print "<a href=\"http://localhost/app/resources/TeamResource.php?id=" . $team->team_id . "\">";
 				print $team->team_id;
 				print "</a>";
 				print ", ";
