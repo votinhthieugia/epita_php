@@ -1,0 +1,25 @@
+<table>
+  <thead>
+    <tr>
+      <th>Id</td>
+      <th>Project Id</td>
+      <th>Owner Id</td>
+      <th>Summary</td>
+      <th>Created At</td>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    $columns = ['team_id', 'project_id', 'owner_id', 'summary', 'created_at'];
+    for ($i = 0; $i < count($team); $i++) {
+      print "<tr>";
+      foreach($columns as $col) {
+        print "<td>";
+        print $team[$i][$col];
+        print "</td>";
+      }
+      print "</tr>";
+    }
+    ?>
+  </tbody>
+</table>

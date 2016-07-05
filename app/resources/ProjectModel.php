@@ -1,5 +1,5 @@
 <?php
-require_once("DemoDB.php");
+require_once("DBConnection.php");
 
 /** Access to the person table.
  * Put here the methods like getBySomeCriteriaSEarch */
