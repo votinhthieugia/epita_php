@@ -31,13 +31,13 @@
  *
  */
 require_once("HttpResource.php");
-require_once("DB.php");
+require_once("DemoDB.php");
 
-require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
+//require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
 
 // Call debug from PhpConsole\Handler
-$handler = PhpConsole\Handler::getInstance();
-$handler->start();
+//$handler = PhpConsole\Handler::getInstance();
+//$handler->start();
 #$handler->debug('called from handler debug', 'some.three.tags');
 
 // Call debug from PhpConsole\Connector (if you don't use PhpConsole\Handler in your project)
@@ -76,7 +76,7 @@ class PersonResource extends HttpResource {
     // Call the parent
     parent::do_get();
     try {
-      $db = DB::getConnection();
+      $db = DemoDB::getConnection();
       if($this->id == -1){
 		$sql = "SELECT * FROM project";
 		$stmt = $db->prepare($sql);
@@ -135,7 +135,7 @@ class PersonResource extends HttpResource {
     }
     else {
       try {
-        $db = DB::getConnection();
+        $db = DemoDB::getConnection();
         $sql = "UPDATE person SET name=:name WHERE person_id=:id";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":name", ucwords(trim($_PUT["name"])));
@@ -183,7 +183,7 @@ class PersonResource extends HttpResource {
       $this->exit_error(400, "idRequired");
     }
     try {
-      $db = DB::getConnection();
+      $db = DemoDB::getConnection();
       $sql = "DELETE FROM person WHERE person_id=:id";
       $stmt = $db->prepare($sql);
       $stmt->bindValue(":id", $this->id);

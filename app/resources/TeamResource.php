@@ -62,14 +62,10 @@ class TeamResource extends HttpResource {
     parent::do_post();
     try {
       $db = DemoDB::getConnection();
-      $sql = "INSERT INTO team(owner_id, project_id, summary, created_at) 
-              VALUES(:ownerId, :projectId, :summary, :createdAt)";
+      $sql = "INSERT INTO team(owner_id, project_id, summary, created_at) VALUES(?, ?, ?, ?)";
       $stmt = $db->prepare($sql);
-      $stmt->bindValue(":ownerId", $_SESSION["login_id"]);
-      $stmt->bindValue(":projectId", $_POST["project_id"]);
-      $stmt->bindValue(":summary", $_POST["summary"]);
-      $stmt->bindValue(":createdAt", time());
-      $ok = $stmt->execute();
+      $data = array($_POST["ownerId"], $_POST["projectId"], $_POST["summary"], date('Y-m-d H:i:s'));
+      $ok = $stmt->execute($data);
       if ($ok) {
       } else {
         $this->exit_error(500);
@@ -80,6 +76,7 @@ class TeamResource extends HttpResource {
   }
 
   protected function do_put() {
+    print "resource put";
     if ($this->id == -1) {
       $this->exit_error(404, "idRequis");
     }
@@ -88,19 +85,19 @@ class TeamResource extends HttpResource {
     parse_str(file_get_contents("php://input"), $_PUT);
     try {
       $db = DemoDB::getConnection();
-      $sql = "SELECT FROM team WHERE team_id=:id";
-      $stmt = $db->prepare($sql);
-      $stmt->bindValue(":id", $this->id);
-      $ok = $stmt->execute();
-      if ($ok) {
-        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $row = $row[0];
-        if ($row["owner_id"] != $_SESSION['login_id']) {
-          $this->exit_error(401, "mustBeOwner");
-        }
-      } else {
-        $this->exit_error(404);
-      }
+      //$sql = "SELECT FROM team WHERE team_id=:id";
+      //$stmt = $db->prepare($sql);
+      //$stmt->bindValue(":id", $this->id);
+      //$ok = $stmt->execute();
+      //if ($ok) {
+      //  $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      //  $row = $row[0];
+      //  if ($row["owner_id"] != $_SESSION['login_id']) {
+      //    $this->exit_error(401, "mustBeOwner");
+      //  }
+      //} else {
+      //  $this->exit_error(404);
+      //}
 
       $sql = "UPDATE team SET summary=:summary WHERE team_id=:id";
       $stmt = $db->prepare($sql);
