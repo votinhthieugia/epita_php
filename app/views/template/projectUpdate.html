@@ -1,0 +1,16 @@
+<h2>Edit Project</h2>
+<form method="post" action="">
+  <input type="text" name="project_id" value="<?=$project['project_id'] ?>" />
+  Project_id: <?=$project['project_id']?>
+  <br/>
+  title:</br>
+  <input type="text" name="title" value="<?=$project["title"] ?>" required>
+  </br>
+  deadline:</br>
+  <input type="date" name="deadline" value="<?=$project["deadline"] ?>" required>
+  </br>
+  subject:</br>
+  <input type="text" name="subject" required value="<?=$project["subject"] ?>">
+  </br>
+  <input type="submit" value="Update" />
+</form>

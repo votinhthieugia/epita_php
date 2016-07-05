@@ -20,7 +20,7 @@ function get_project_info() {
 	
 	$context = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
 	$response = json_decode(file_get_contents('http://localhost/app/resources/ProjectResource.php',false,$context));
-	$columns = ['project_id', 'owner_id', 'class_id', 'title', 'created_at', 'deadline', 'subject'];
+	$columns = ['owner_id', 'class_id', 'title', 'created_at', 'deadline', 'subject'];
 	
   print <<<END_FORM
   <form method="POST">
@@ -48,6 +48,12 @@ END_FORM;
 		
 		$personsNotInTeam = json_decode(file_get_contents('http://localhost/app/resources/PersonNotInTeamResource.php?project_id='.$item->project_id.'&class_id='.$item->class_id, false, $context));
 		$teams = json_decode(file_get_contents('http://localhost/app/resources/TeamResource.php?project_id='.$item->project_id, false, $context));
+		
+		print "<td>";
+		print "<a href=\"http://localhost/app/views/ProjectUpdate.php?id=" . $item->project_id . "\">";
+		print $item->project_id;
+		print "</a>";
+		print "</td>";
 		
 		foreach($columns as $col) { 
 			print "<td>";

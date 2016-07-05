@@ -102,53 +102,53 @@ protected function do_post() {
   }
 
   protected function do_put() {
-    if (!$this->is_admin()) {
-      $this->exit_error(401, "mustBeAdmin");
+    if ($this->id == -1) {
+      $this->exit_error(404, "idRequis");
     }
+
     // Les parametres passes en put
-    parse_str(file_get_contents("php://input"), $_PUT);
-    if (empty($_PUT["name"])) {
-      $this->exit_error(400, "nameMandatoryAndNotEmpty");
-    }
-    else {
-      try {
-        $db = DemoDB::getConnection();
-        $sql = "UPDATE person SET name=:name WHERE person_id=:id";
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(":name", ucwords(trim($_PUT["name"])));
-        $stmt->bindValue(":id", $this->id);
-        $ok = $stmt->execute();
-        if ($ok) {
-          $this->statusCode = 204;
-          $this->body = "";
-          // Number of affected rows
-          $nb = $stmt->rowCount();
-          if ($nb == 0) {
-            // No person or not really changed.
-            // Check it;
-            $sql = "SELECT person_id FROM person WHERE person_id=:id";
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(":id", $_GET["id"]);
-            $ok = $stmt->execute();
-            if ($stmt->fetch() == null) {
-              $this->exit_error(404);
-            }
+    //parse_str(file_get_contents("php://input"), $_PUT);
+    
+    try {
+      $db = DemoDB::getConnection();
+      
+      $sql = "UPDATE project SET subject=:subject deadline=:deadline title=:title WHERE project_id=:id";
+      $stmt = $db->prepare($sql);
+      $stmt->bindValue(":subject", trim($_PUT["subject"]));
+      $stmt->bindValue(":deadline", trim($_PUT["deadline"]));
+      $stmt->bindValue(":title", trim($_PUT["title"]));
+      $stmt->bindValue(":id", $this->id);
+      $ok = $stmt->execute();
+      if ($ok) {
+        $this->statusCode = 204;
+        $this->body = "";
+        // Number of affected rows
+        $nb = $stmt->rowCount();
+        if ($nb == 0) {
+          // No team or not really changed.
+          // Check it;
+          $sql = "SELECT team_id FROM team WHERE team_id=:id";
+          $stmt = $db->prepare($sql);
+          $stmt->bindValue(":id", $_GET["id"]);
+          $ok = $stmt->execute();
+          if ($stmt->fetch() == null) {
+            $this->exit_error(404);
           }
+        }
+      }
+      else {
+        $erreur = $stmt->errorInfo();
+        // si doublon
+        if ($erreur[1] == 1062) {
+          $this->exit_error(409, "duplicateName");
         }
         else {
-          $erreur = $stmt->errorInfo();
-          // si doublon
-          if ($erreur[1] == 1062) {
-            $this->exit_error(409, "duplicateName");
-          }
-          else {
-            $this->exit_error(409, $erreur[1]." : ".$erreur[2]);
-          }
+          $this->exit_error(409, $erreur[1]." : ".$erreur[2]);
         }
       }
-      catch (PDOException $e) {
-        $this->exit_error(500, $e->getMessage());
-      }
+    }
+    catch (PDOException $e) {
+      $this->exit_error(500, $e->getMessage());
     }
   }
 
