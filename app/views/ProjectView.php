@@ -1,9 +1,7 @@
 <?php
 
-//require_once("ProjectResource.php");
+//DEBUG
 require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
-
-// Call debug from PhpConsole\Handler
 $handler = PhpConsole\Handler::getInstance();
 $handler->start();
 
@@ -25,13 +23,10 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 function get_project_info() {
 	
 	$context = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
-	$response = json_decode(file_get_contents('http://localhost/PROJ/ProjectResource.php',false,$context));	
+	$response = json_decode(file_get_contents('http://localhost/app/resources/ProjectResource.php',false,$context));
 	$columns = ['project_id', 'owner_id', 'class_id', 'title', 'created_at', 'deadline', 'subject'];
 	
-	json_decode(file_get_contents('http://localhost/PROJ/TeamResource.php?id=3'));
-	//$teams = json_decode(file_get_contents('http://localhost/PROJ/ProjectResource.php?id=1', false, $context));
-	//$s = 'team_id';
-	//print $teams[0];
+	$personsNotInTeam = json_decode(file_get_contents('http://localhost/app/resources/PersonNotInTeamResource.php', false, $context));
 	
   print <<<END_FORM
   <form method="POST">
@@ -47,8 +42,8 @@ function get_project_info() {
         <th>Created at</th>
         <th>Deadline</th>
         <th>Subject</th>
-        <th>List of teams</th>
-        <th>List of students not in team</th>
+        <th>Teams</th>
+        <th>Students not in any team</th>
       </tr>
     </thead>    
     <tbody id="resultsBody">
@@ -56,18 +51,30 @@ END_FORM;
 
 	foreach($response as $item) {
 		print "<tr>";
-		$context = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
-		$teams = json_decode(file_get_contents('http://localhost/PROJ/TeamResource.php?id='.$item->project_id));
+		$teams = json_decode(file_get_contents('http://localhost/app/resources/TeamResource.php?project_id='.$item->project_id, false, $context));
 		foreach($columns as $col) { 
 			print "<td>";
 			print $item->$col;
 			print "</td>";
 		}
 		print "<td>";
-		foreach($teams as $team) { 
-			print $team->team_id;
-			print ", ";
-		}
+		if (isset($teams))
+			foreach($teams as $team) { 
+				print "<a href=\"http://localhost/app/resources/TeamResource.php?id=" . $team->team_id . "\">";
+				print $team->team_id;
+				print "</a>";
+				print ", ";
+			}
+		print "</td>";
+		
+		print "<td>";
+		if (isset($personsNotInTeam))
+			foreach($personsNotInTeam as $person) { 
+				print "<a href=\"http://localhost/app/resources/PersonNotInTeamResource.php?id=" . $person->person_id . "\">";
+				print $person->first_name . " " . $person->last_name;
+				print "</a>";
+				print ", ";
+			}
 		print "</td>";
 		
 		print "</tr>";

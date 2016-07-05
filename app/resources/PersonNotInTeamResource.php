@@ -2,12 +2,13 @@
 
 require_once("HttpResource.php");
 require_once("DemoDB.php");
-
 require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
+
+// Call debug from PhpConsole\Handler
 $handler = PhpConsole\Handler::getInstance();
 $handler->start();
 
-class ProjectResource extends HttpResource {
+class PersonNotInTeamResource extends HttpResource {
   /** Person id */
   protected $id;
 
@@ -36,12 +37,18 @@ class ProjectResource extends HttpResource {
     try {
       $db = DemoDB::getConnection();
       if($this->id == -1){
-		$sql = "SELECT * FROM project";
+		$sql = 
+		"SELECT person_id, first_name, last_name FROM person
+			WHERE person_id NOT IN
+			( 
+				SELECT student_id FROM team_member
+				GROUP BY student_id
+			)";
 		$stmt = $db->prepare($sql);
 	  }else{
-		$sql = "SELECT * FROM project WHERE project_id=:projectId";  
+		$sql = "SELECT * FROM person WHERE person_id=:id";  
 		$stmt = $db->prepare($sql);
-		$stmt->bindValue(":projectId", $this->id);
+		$stmt->bindValue(":id", $this->id);
 	  }
       //$stmt = $db->prepare($sql);
       //$stmt->bindValue(":projectId", $this->id);
@@ -166,5 +173,5 @@ class ProjectResource extends HttpResource {
 }
 
 // Simply run the resource
-ProjectResource::run();
+PersonNotInTeamResource::run();
 ?>
