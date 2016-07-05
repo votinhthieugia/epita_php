@@ -27,8 +27,9 @@
       print "<td>";
       $member = $members[$i];
       $count = count($member);
-      for ($j = 0; $j < $count; $j++) {
-        print $member[$j]["first_name"];
+      for ($j = 0; $j < $count; $j++) {?>
+        <a href="/epita_php/app/views/PersonView.php?id=<?= $member[$j]['person_id'] ?>"><?=$member[$j]["first_name"]?></a>
+        <?php 
         if ($j < $count - 1) {
           print ", ";
         }
@@ -36,7 +37,7 @@
       print "</td>";
       if ($is_all) {
         print "<td>";?>
-          <a href="http://localhost/epita_php/app/views/TeamView.php?id=<?= $team[$i]['team_id'] ?>">Detail</a>
+          <a href="/epita_php/app/views/TeamView.php?id=<?= $team[$i]['team_id'] ?>">Detail</a>
         <?php
         print "</td>";
       }

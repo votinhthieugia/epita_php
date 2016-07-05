@@ -1,0 +1,27 @@
+<table>
+  <thead>
+    <tr>
+      <th>Id</td>
+      <th>First Name</td>
+      <th>Last Name</td>
+      <th>Email</td>
+      <th>Address</td>
+      <th>Zip Code</td>
+      <th>Town</td>
+      <th>Mobile Phone</td>
+      <th>Created At</td>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    $columns = ['person_id', 'first_name', 'last_name', 'email', 'address', 'zip_code', 'town', 'mobile_phone', 'created_at'];
+    print "<tr>";
+    foreach($columns as $col) {
+      print "<td>";
+      print $person[$col];
+      print "</td>";
+    }
+    print "</tr>";
+    ?>
+  </tbody>
+</table>

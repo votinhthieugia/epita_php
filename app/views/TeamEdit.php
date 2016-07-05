@@ -1,5 +1,6 @@
 <?php
 require_once("../lib/RestApiCall.php");
+include("LoginCheck.php");
 
 switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":
