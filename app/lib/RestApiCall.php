@@ -28,7 +28,7 @@ class RestApiCall {
       return false;
     }
     curl_close($ch);
-    return $response;
+    return json_decode($response, true);
   }
 
   public static function do_put($url, $data) {

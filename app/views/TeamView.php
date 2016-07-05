@@ -1,4 +1,5 @@
 <?php
+include("LoginCheck.php");
 require_once("../lib/RestApiCall.php");
 
 $param = "";
