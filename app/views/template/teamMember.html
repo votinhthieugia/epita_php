@@ -1,0 +1,26 @@
+<h3>Members</h3>
+<?php
+$count = count($members);
+for ($j = 0; $j < $count; $j++) {?>
+  <form method="post" action="">
+    <input type="hidden" name="delete" value="true"/>
+    <input type="hidden" name="team_id" value="<?=$team['team_id'] ?>" />
+    <input type="hidden" name="student_id" value="<?= $members[$j]['person_id'] ?>" />
+    <?= $members[$j]["first_name"] ?>
+    <input type="submit" value="Delete"/>
+  </form>
+  <?php
+  }
+?>
+<?php
+$count = count($available_students);
+for ($j = 0; $j < $count; $j++) {?>
+<form method="post" action="">
+  <input type="hidden" name="team_id" value="<?=$team['team_id']?>" />
+  <input type="hidden" name="student_id" value="<?= $available_students[$j]['person_id'] ?>" />
+  <?= $available_students[$j]["first_name"] ?>
+  <input type="submit" value="Add" />
+</form>
+<?php 
+}
+?>
