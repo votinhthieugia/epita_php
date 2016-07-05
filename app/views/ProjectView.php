@@ -23,8 +23,10 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 function get_project_info() {
 	
 	$context = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
-	$response = json_decode(file_get_contents('http://localhost/app/resources/ProjectResource.php',false,$context));	
+	$response = json_decode(file_get_contents('http://localhost/app/resources/ProjectResource.php',false,$context));
 	$columns = ['project_id', 'owner_id', 'class_id', 'title', 'created_at', 'deadline', 'subject'];
+	
+	$personsNotInTeam = json_decode(file_get_contents('http://localhost/app/resources/PersonNotInTeamResource.php', false, $context));
 	
   print <<<END_FORM
   <form method="POST">
@@ -40,8 +42,8 @@ function get_project_info() {
         <th>Created at</th>
         <th>Deadline</th>
         <th>Subject</th>
-        <th>List of teams</th>
-        <th>List of students not in team</th>
+        <th>Teams</th>
+        <th>Students not in any team</th>
       </tr>
     </thead>    
     <tbody id="resultsBody">
@@ -60,6 +62,16 @@ END_FORM;
 			foreach($teams as $team) { 
 				print "<a href=\"http://localhost/app/resources/TeamResource.php?id=" . $team->team_id . "\">";
 				print $team->team_id;
+				print "</a>";
+				print ", ";
+			}
+		print "</td>";
+		
+		print "<td>";
+		if (isset($personsNotInTeam))
+			foreach($personsNotInTeam as $person) { 
+				print "<a href=\"http://localhost/app/resources/PersonNotInTeamResource.php?id=" . $person->person_id . "\">";
+				print $person->first_name . " " . $person->last_name;
 				print "</a>";
 				print ", ";
 			}
