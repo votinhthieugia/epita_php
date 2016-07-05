@@ -70,7 +70,7 @@ END_FORM;
 		print "<td>";
 		if (isset($teams))
 			foreach($teams as $team) { 
-				print "<a href=\"http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamResource.php?id=" . $team->team_id . "\">";
+				print "<a href=\"http://".$_SERVER["SERVER_NAME"]."/epita_php/app/views/TeamView.php?id=" . $team->team_id . "\">";
 				print $team->team_id;
 				print "</a>";
 				print ", ";
