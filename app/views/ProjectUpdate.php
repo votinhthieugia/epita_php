@@ -26,7 +26,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     $data = array(
       "ownerId" => $ownerId,
       "title" => $_POST["title"],
-      "deadline" => $_POST["deadline"],
+      //"deadline" => $_POST["deadline"],
       "subject" => $_POST["subject"]
     );
     $result = RestApiCall::do_put($team_url, $data);

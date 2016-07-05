@@ -107,15 +107,16 @@ protected function do_post() {
     }
 
     // Les parametres passes en put
-    //parse_str(file_get_contents("php://input"), $_PUT);
+    parse_str(file_get_contents("php://input"), $_PUT);
     
     try {
       $db = DemoDB::getConnection();
+    //  $handler->debug('called from handler debug', 'some.three.tags');
       
-      $sql = "UPDATE project SET subject=:subject deadline=:deadline title=:title WHERE project_id=:id";
+      $sql = "UPDATE project SET subject=:subject, title=:title WHERE project_id=:id";
       $stmt = $db->prepare($sql);
       $stmt->bindValue(":subject", trim($_PUT["subject"]));
-      $stmt->bindValue(":deadline", trim($_PUT["deadline"]));
+      //$stmt->bindValue(":deadline", trim($_PUT["deadline"]));
       $stmt->bindValue(":title", trim($_PUT["title"]));
       $stmt->bindValue(":id", $this->id);
       $ok = $stmt->execute();
