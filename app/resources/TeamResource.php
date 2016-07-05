@@ -85,9 +85,8 @@ class TeamResource extends HttpResource {
       $stmt = $db->prepare($sql);
       $data = array($_POST["ownerId"], $_POST["projectId"], $_POST["summary"], date('Y-m-d H:i:s'));
       $ok = $stmt->execute($data);
-      if ($ok) {
-      } else {
-        $this->exit_error(500);
+      if ($ok == false) {
+        $this->exit_error(400);
       }
     } catch (PDOException $e) {
       $this->exit_error(500, $e->getMessage());
@@ -95,7 +94,6 @@ class TeamResource extends HttpResource {
   }
 
   protected function do_put() {
-    print "resource put";
     if ($this->id == -1) {
       $this->exit_error(404, "idRequis");
     }
