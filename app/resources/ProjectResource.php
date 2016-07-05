@@ -3,9 +3,9 @@
 require_once("HttpResource.php");
 require_once("DemoDB.php");
 
-//require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
-//$handler = PhpConsole\Handler::getInstance();
-//$handler->start();
+require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
+$handler = PhpConsole\Handler::getInstance();
+$handler->start();
 
 class ProjectResource extends HttpResource {
   /** Person id */
@@ -80,6 +80,25 @@ class ProjectResource extends HttpResource {
     }
     return $result;
 
+  }
+
+protected function do_post() {
+    parent::do_post();
+    try {
+      $db = DemoDB::getConnection();
+      $sql = "INSERT INTO project(owner_id, class_id, subject, created_at, title, deadline) VALUES(?, ?, ?, ?, ?, ?)";
+      $stmt = $db->prepare($sql);
+      $data = array($_POST["ownerId"], $_POST["classId"], $_POST["subject"], date('Y-m-d H:i:s'),
+      $_POST["title"], $_POST["deadline"]);
+      $ok = $stmt->execute($data);
+      if ($ok) {
+      } else {
+        $this->exit_error(500);
+      }
+    } catch (PDOException $e) {
+      $this->exit_error(500, $e->getMessage());
+    }
+    
   }
 
   protected function do_put() {
