@@ -23,7 +23,8 @@ BEGIN
     (5, 'Favio', 'Tejada', '18 rue Dalou', '94400', 'Vilejuif', 'favio@gmail.com', '0785940365', '123456', false, NOW()),
     (6, 'Adriana', 'Santalla', '19 rue Dalou', '94400', 'Vilejuif', 'adriana@gmail.com', '0785940366', '123456', false, NOW()),
     (7, 'Philippe', 'Laroque', '20 rue Dalou', '94400', 'Vilejuif', 'phillipelaroque@gmail.com', '0785940367', '123456', true, NOW()),
-    (8, 'Thomas', 'Broussard', '21 rue Dalou', '94400', 'Vilejuif', 'thomas@gmail.com', '0785940368', '123456', true, NOW());
+    (8, 'Thomas', 'Broussard', '21 rue Dalou', '94400', 'Vilejuif', 'thomas@gmail.com', '0785940368', '123456', true, NOW()),
+    (9, 'Prince', 'Matthew', '25 rosa luxermburg', '94400', 'Vilejuif', 'prince@gmail.com', '0785940368', '123456', false, NOW());
     
     INSERT INTO class(class_id, name) VALUES
     (1, 'Cuccu'),
@@ -36,6 +37,7 @@ BEGIN
     
 	INSERT INTO class_member(person_id, class_id) VALUES
     (1, 1),
+    (9, 1),
     (2, 2);
     
     INSERT INTO team(team_id, project_id, owner_id, created_at) VALUES 

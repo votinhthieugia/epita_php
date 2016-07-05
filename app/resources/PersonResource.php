@@ -7,18 +7,17 @@ require_once("DemoDB.php");
 #$handler = PhpConsole\Handler::getInstance();
 #$handler->start();
 
-class PersonNotInTeamResource extends HttpResource {
+class PersonResource extends HttpResource {
   /** Person id */
   protected $id;
 
   /** Initialize $id. Send 400 if id missing or not positive integer */
   public function init() {
 	  	
-    if (isset($_GET["project_id"]) && isset($_GET["class_id"])) {
-      if (is_numeric($_GET["project_id"])) {
-        $this->project_id = 0 + $_GET["project_id"];
-        $this->class_id = 0 + $_GET["class_id"];
-        if (!is_int($this->project_id) || $this->project_id <= 0) {
+    if (isset($_GET["id"])) {
+      if (is_numeric($_GET["id"])) {
+        $this->id = 0 + $_GET["id"]; // transformer en numerique\
+        if (!is_int($this->id) || $this->id <= 0) {
           $this->exit_error(400, "idNotPositiveInteger");
         }
       }
@@ -27,7 +26,7 @@ class PersonNotInTeamResource extends HttpResource {
       }
     }
     else {
-      $this->exit_error(400, "missing params");
+      $this->id = -1; // transformer en numerique\
     }
   }
 
@@ -36,25 +35,16 @@ class PersonNotInTeamResource extends HttpResource {
     parent::do_get();
     try {
       $db = DemoDB::getConnection();
-		$sql = 
-		"SELECT person_id, first_name, last_name from person
-			WHERE person_id = 
-			(
-				SELECT person_id FROM class_member
-				WHERE class_id = :class_id AND person_id NOT IN
-				(
-					SELECT student_id FROM team_member
-					WHERE team_id IN
-					(
-						SELECT team_id FROM team
-						WHERE project_id = :project_id
-					)
-					GROUP BY student_id
-				)
-			)";
+      if($this->id == -1){
+		$sql = "SELECT * FROM person";  
 		$stmt = $db->prepare($sql);
-		$stmt->bindValue(":project_id", $this->project_id);
-		$stmt->bindValue(":class_id", $this->class_id);
+	  }else{
+		$sql = "SELECT * FROM person WHERE person_id=:id";  
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(":id", $this->id);
+	  }
+      //$stmt = $db->prepare($sql);
+      //$stmt->bindValue(":projectId", $this->id);
       $ok = $stmt->execute();
       if ($ok) {
         $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -176,5 +166,5 @@ class PersonNotInTeamResource extends HttpResource {
 }
 
 // Simply run the resource
-PersonNotInTeamResource::run();
+PersonResource::run();
 ?>
