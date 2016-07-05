@@ -1,19 +1,15 @@
 <?php
 
 //DEBUG
-#require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
-#$handler = PhpConsole\Handler::getInstance();
-#$handler->start();
+require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
+$handler = PhpConsole\Handler::getInstance();
+$handler->start();
 
 $messages = array();
 
 switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":
     get_project_info();
-    break;
-  case "POST":
-    $person = do_login();
-    print "Logged in as :".$person[name];
     break;
   default:
     die("Not implemented");
@@ -29,7 +25,7 @@ function get_project_info() {
   print <<<END_FORM
   <form method="POST">
     <div class="container">
-  <h2>Results</h2>
+  <h2>All projects</h2>
   <table class="table">
     <thead>
       <tr>
@@ -85,20 +81,9 @@ print <<<END_FORM3
 	</tbody>
   </table>
   </div>
-    <button type="submit">Submit</button>
+   <a href=ProjectCreate.php>Create Project</a>
   </form>
 END_FORM3;
-}
-
-function do_login() {
-  $username = empty($_POST["username"]) ? "" : trim($_POST["username"]);
-  $password = empty($_POST["password"]) ? "" : trim($_POST["password"]);
-  $person = PersonModel::login($username, $password);
-  if (count($person) > 0) {
-    return $person;
-  } else {
-    display_login_form();
-  }
 }
 
 ?>
