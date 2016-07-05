@@ -1,5 +1,7 @@
 <?php
 
+include("LoginCheck.php");
+
 //DEBUG
 require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
 $handler = PhpConsole\Handler::getInstance();
@@ -49,11 +51,16 @@ END_FORM;
 		$personsNotInTeam = json_decode(file_get_contents('http://'.$_SERVER["SERVER_NAME"].'/epita_php/app/resources/PersonNotInTeamResource.php?project_id='.$item->project_id.'&class_id='.$item->class_id, false, $context));
 		$teams = json_decode(file_get_contents('http://'.$_SERVER["SERVER_NAME"].'/epita_php/app/resources/TeamResource.php?project_id='.$item->project_id, false, $context));
 		
-		print "<td>";
-		print "<a href=\"http://".$_SERVER["SERVER_NAME"]."/epita_php/app/views/ProjectUpdate.php?id=" . $item->project_id . "\">";
-		print $item->project_id;
-		print "</a>";
-		print "</td>";
+        print "<td>";
+        if($_SESSION['login_id'] == $item->owner_id)
+        {            
+            print "<a href=\"http://".$_SERVER["SERVER_NAME"]."/epita_php/app/views/ProjectUpdate.php?id=" . $item->project_id . "\">";
+            print $item->project_id;
+            print "</a>";            
+        }else{
+            print $item->project_id;
+        }
+        print "</td>";
 		
 		foreach($columns as $col) { 
 			print "<td>";
@@ -73,7 +80,7 @@ END_FORM;
 		print "<td>";
 		if (isset($personsNotInTeam))
 			foreach($personsNotInTeam as $person) { 
-				print "<a href=\"http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/PersonResource.php?id=" . $person->person_id . "\">";
+				print "<a href=\"http://".$_SERVER["SERVER_NAME"]."/epita_php/app/views/PersonView.php?id=" . $person->person_id . "\">";
 				print $person->first_name . " " . $person->last_name;
 				print "</a>";
 				print ", ";
