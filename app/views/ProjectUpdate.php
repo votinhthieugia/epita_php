@@ -8,7 +8,7 @@ $handler->start();
 switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":
     if (isset($_GET["id"])) {
-      $project_url = "http://localhost/app/resources/ProjectResource.php?id=".$_GET["id"];
+      $project_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/ProjectResource.php?id=".$_GET["id"];
       $project = RestApiCall::do_get($project_url);
       if (count($project) > 0) {
         $project = $project[0];
@@ -21,7 +21,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     }
     break;
   case "POST":
-    $team_url = "http://localhost/app/resources/ProjectResource.php?id=".$_POST["project_id"];
+    $team_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/ProjectResource.php?id=".$_POST["project_id"];
     $ownerId = 1;//$_SESSION['login_id'];
     $data = array(
       "ownerId" => $ownerId,
@@ -33,7 +33,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     if ($result == false) {
       $error = true;
     } else {
-      header("Location: http://localhost/app/views/ProjectView.php");
+      header("Location: http://".$_SERVER["SERVER_NAME"]."/epita_php/app/views/ProjectView.php");
     }
     break;
 }

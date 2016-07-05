@@ -19,7 +19,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 function get_project_info() {
 	
 	$context = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
-	$response = json_decode(file_get_contents('http://localhost/app/resources/ProjectResource.php',false,$context));
+	$response = json_decode(file_get_contents('http://'.$_SERVER["SERVER_NAME"].'/epita_php/app/resources/ProjectResource.php',false,$context));
 	$columns = ['owner_id', 'class_id', 'title', 'created_at', 'deadline', 'subject'];
 	
   print <<<END_FORM
@@ -46,11 +46,11 @@ END_FORM;
 	foreach($response as $item) {
 		print "<tr>";
 		
-		$personsNotInTeam = json_decode(file_get_contents('http://localhost/app/resources/PersonNotInTeamResource.php?project_id='.$item->project_id.'&class_id='.$item->class_id, false, $context));
-		$teams = json_decode(file_get_contents('http://localhost/app/resources/TeamResource.php?project_id='.$item->project_id, false, $context));
+		$personsNotInTeam = json_decode(file_get_contents('http://'.$_SERVER["SERVER_NAME"].'/epita_php/app/resources/PersonNotInTeamResource.php?project_id='.$item->project_id.'&class_id='.$item->class_id, false, $context));
+		$teams = json_decode(file_get_contents('http://'.$_SERVER["SERVER_NAME"].'/epita_php/app/resources/TeamResource.php?project_id='.$item->project_id, false, $context));
 		
 		print "<td>";
-		print "<a href=\"http://localhost/app/views/ProjectUpdate.php?id=" . $item->project_id . "\">";
+		print "<a href=\"http://".$_SERVER["SERVER_NAME"]."/epita_php/app/views/ProjectUpdate.php?id=" . $item->project_id . "\">";
 		print $item->project_id;
 		print "</a>";
 		print "</td>";
@@ -63,7 +63,7 @@ END_FORM;
 		print "<td>";
 		if (isset($teams))
 			foreach($teams as $team) { 
-				print "<a href=\"http://localhost/app/resources/TeamResource.php?id=" . $team->team_id . "\">";
+				print "<a href=\"http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamResource.php?id=" . $team->team_id . "\">";
 				print $team->team_id;
 				print "</a>";
 				print ", ";
@@ -73,7 +73,7 @@ END_FORM;
 		print "<td>";
 		if (isset($personsNotInTeam))
 			foreach($personsNotInTeam as $person) { 
-				print "<a href=\"http://localhost/app/resources/PersonResource.php?id=" . $person->person_id . "\">";
+				print "<a href=\"http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/PersonResource.php?id=" . $person->person_id . "\">";
 				print $person->first_name . " " . $person->last_name;
 				print "</a>";
 				print ", ";

@@ -1,22 +1,17 @@
 <?php
 require_once("../lib/RestApiCall.php");
 
-require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
-$handler = PhpConsole\Handler::getInstance();
-$handler->start();
+//require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
+//$handler = PhpConsole\Handler::getInstance();
+//$handler->start();
 
 switch ($_SERVER["REQUEST_METHOD"]) {
-  case "GET":
-    //$projectId = $_GET["projectId"];
-    //$project_url = "http://localhost/app/resources/ProjectResource.php?id=".$projectId;
-    //$project = RestApiCall::do_get($project_url);
-    //if (count($project) > 0) {
-      //$project = $project[0];
+  case "GET":    
       include("./template/projectCreate.html");
-    //}
+    
     break;
   case $_SERVER["REQUEST_METHOD"]:    
-    $project_url = "http://localhost/app/resources/ProjectResource.php";
+    $project_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/ProjectResource.php";
     $ownerId = 1;//$_SESSION['login_id'];
     $data = array(
       "ownerId" => $ownerId,
@@ -30,7 +25,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
       $error = true;
     }else
     {
-        header("Location: http://localhost/app/views/ProjectView.php");
+        header("Location: http://".$_SERVER["SERVER_NAME"]."/epita_php/app/views/ProjectView.php");
     }
     // Redirect to team list.
     

@@ -7,7 +7,7 @@ class DemoDB {
     $db = "training_center";
     $dsn = "mysql:dbname=$db;host=127.0.0.1";
     $user = "root";
-    $password = "";
+    $password = "123";
 
     // Get a DB connection with PDO library
     $bdd = new PDO($dsn, $user, $password);
