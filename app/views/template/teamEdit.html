@@ -1,0 +1,11 @@
+<h2>Edit Team</h2>
+<form method="post" action="">
+  <input type="hidden" name="projectId" value="<?=$project['project_id'] ?>" />
+  <input type="hidden" name="teamId" value="<?=$team['team_id'] ?>" />
+  Project: <?=$project['title']?>
+  <br/>
+  Summary:</br>
+  <textarea name="summary" rows="4" cols="100"><?=$team["summary"] ?></textarea>
+  </br>
+  <input type="submit" value="Update" />
+</form>

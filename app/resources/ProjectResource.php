@@ -3,9 +3,9 @@
 require_once("HttpResource.php");
 require_once("DemoDB.php");
 
-require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
-$handler = PhpConsole\Handler::getInstance();
-$handler->start();
+//require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
+//$handler = PhpConsole\Handler::getInstance();
+//$handler->start();
 
 class ProjectResource extends HttpResource {
   /** Person id */
