@@ -1,11 +1,9 @@
 <?php
 
-//require_once("ProjectResource.php");
-require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
-
-// Call debug from PhpConsole\Handler
-$handler = PhpConsole\Handler::getInstance();
-$handler->start();
+//DEBUG
+//require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
+//$handler = PhpConsole\Handler::getInstance();
+//$handler->start();
 
 $messages = array();
 
@@ -27,11 +25,6 @@ function get_project_info() {
 	$context = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
 	$response = json_decode(file_get_contents('http://localhost/PROJ/ProjectResource.php',false,$context));	
 	$columns = ['project_id', 'owner_id', 'class_id', 'title', 'created_at', 'deadline', 'subject'];
-	
-	json_decode(file_get_contents('http://localhost/PROJ/TeamResource.php?id=3'));
-	//$teams = json_decode(file_get_contents('http://localhost/PROJ/ProjectResource.php?id=1', false, $context));
-	//$s = 'team_id';
-	//print $teams[0];
 	
   print <<<END_FORM
   <form method="POST">
@@ -56,18 +49,20 @@ END_FORM;
 
 	foreach($response as $item) {
 		print "<tr>";
-		$context = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
-		$teams = json_decode(file_get_contents('http://localhost/PROJ/TeamResource.php?id='.$item->project_id));
+		$teams = json_decode(file_get_contents('http://localhost/PROJ/TeamResource.php?project_id='.$item->project_id, false, $context));
 		foreach($columns as $col) { 
 			print "<td>";
 			print $item->$col;
 			print "</td>";
 		}
 		print "<td>";
-		foreach($teams as $team) { 
-			print $team->team_id;
-			print ", ";
-		}
+		if (isset($teams))
+			foreach($teams as $team) { 
+				print "<a href=\"http://localhost/PROJ/TeamResource.php?id=" . $team->team_id . "\">";
+				print $team->team_id;
+				print "</a>";
+				print ", ";
+			}
 		print "</td>";
 		
 		print "</tr>";

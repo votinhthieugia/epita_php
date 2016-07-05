@@ -2,6 +2,11 @@
 require_once("DemoDB.php");
 require_once("HttpResource.php");
 
+//DEBUG
+//require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
+//$handler = PhpConsole\Handler::getInstance();
+//$handler->start();
+
 class TeamResource extends HttpResource {
   protected $id;
 
@@ -14,10 +19,18 @@ class TeamResource extends HttpResource {
           $this->exit_error(400, "idNotPositiveInteger");
         }
       }
-      else {
-        $this->exit_error(400, "idNotPositiveInteger");
-      }
+      //else {
+       // $this->exit_error(400, "idNotPositiveInteger");
+      //}
     }
+    else if (isset($_GET["project_id"])) {
+		if (is_numeric($_GET["project_id"])) {
+        $this->project_id = 0 + $_GET["project_id"]; // transformer en numerique
+        if (!is_int($this->project_id) || $this->project_id <= 0) {
+          $this->exit_error(400, "project_idproject_id");
+        }
+      }
+	}
     else {
       $this->id = -1;
     }
@@ -28,6 +41,12 @@ class TeamResource extends HttpResource {
     parent::do_get();
     try {
       $db = DemoDB::getConnection();
+      if (isset($this->project_id)) {
+		  $sql = "SELECT team_id, project_id, owner_id, summary, created_at FROM team WHERE project_id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":id", $this->project_id);
+	  }
+      else 
       if ($this->id == -1) {
         $sql = "SELECT team_id, project_id, owner_id, summary, created_at FROM team";
         $stmt = $db->prepare($sql);
