@@ -1,5 +1,6 @@
 <?php
 require_once("../lib/RestApiCall.php");
+include("LoginCheck.php");
 
 //require_once(__DIR__ . '/../php_console/src/PhpConsole/__autoload.php');
 //$handler = PhpConsole\Handler::getInstance();
@@ -12,7 +13,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     break;
   case $_SERVER["REQUEST_METHOD"]:    
     $project_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/ProjectResource.php";
-    $ownerId = 1;//$_SESSION['login_id'];
+    $ownerId = $_SESSION['login_id'];
     $data = array(
       "ownerId" => $ownerId,
       "title" => $_POST["title"],
