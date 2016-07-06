@@ -14,3 +14,9 @@ RewriteRule ^team/id-(.*)$ app/views/TeamView.php?id=$1
 RewriteRule ^team/edit/id-(.*)$ app/views/TeamEdit.php?id=$1
 RewriteRule ^team/new/pid-(.*)$ app/views/TeamCreate.php?projectId=$1
 RewriteRule ^team/member/id-(.*)$ app/views/TeamMember.php?id=$1
+
+RewriteRule ^project/id-(.*)$ app/views/ProjectView.php?id=$1
+RewriteRule ^projects$ app/views/ProjectView.php
+RewriteRule ^person/id-(.*)$ app/views/PersonView.php?id=$1
+RewriteRule ^project/edit/id-(.*)$ app/views/ProjectUpdate.php?id=$1
+
