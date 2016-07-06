@@ -65,10 +65,18 @@ END_FORM;
 		
 		foreach($columns as $col) { 
 			print "<td>";
-			print $item->$col;
-      if ($col == 'class_id') {?>
-        <a href="/epita_php/app/views/ProjectCreate.php?class_id=<?= $item->$col ?>">Create Project</a><?php
-      }
+			
+              if(($col == 'created_at') || ($col == 'deadline')){
+                $date = date_create_from_format('Y-m-d h:i:s', $item->$col);                  
+                //print date_format($date, 'd-M-Y');
+                $item->$col = date_format($date, 'd-M-Y');
+              }
+              
+              print $item->$col;
+              
+            if ($col == 'class_id') {?>
+                <a href="/epita_php/app/views/ProjectCreate.php?class_id=<?= $item->$col ?>">Create Project</a><?php
+              }
 			print "</td>";
 		}
 		print "<td>";
