@@ -14,6 +14,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
       if (count($project) > 0) {
         $project = $project[0];
         if($_SESSION['login_id'] == $project["owner_id"]){
+            
+            $newDate = date("Y-m-d", strtotime($project["deadline"]));
+            
             include("./template/projectUpdate.html");
         }else{
             print "you are not the owner of this project";
@@ -36,7 +39,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     $data = array(
       "ownerId" => $ownerId,
       "title" => $_POST["title"],
-      //"deadline" => $_POST["deadline"],
+      "deadline" => $_POST["deadline"],
       "subject" => $_POST["subject"]
     );
     $result = RestApiCall::do_put($team_url, $data);
