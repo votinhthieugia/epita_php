@@ -28,6 +28,7 @@ function do_login() {
   if (count($person) > 0) {
     $person = $person[0];
     $_SESSION["login_id"] = $person["person_id"];
+    $_SESSION["name"] = $person["first_name"]." ".$person["last_name"];
     $_SESSION["email"] = $person["email"];
     $_SESSION["password"] = $person["password"];
     if ($person["is_trainer"]) {

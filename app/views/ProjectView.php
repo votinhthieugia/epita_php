@@ -9,6 +9,7 @@ $handler->start();
 
 $messages = array();
 
+include('./template/header.html');
 switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":
     get_project_info();
@@ -99,4 +100,5 @@ print <<<END_FORM3
 END_FORM3;
 }
 
+include('./template/footer.html');
 ?>
