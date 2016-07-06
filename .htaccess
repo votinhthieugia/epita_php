@@ -6,8 +6,11 @@ Options +Indexes
 #Use url rewriting
 RewriteEngine on
 # Base directory for rewritng
-RewriteBase /
-# Example
-#RewriteRule ^PHP_tutorial/favourite-dish$ PHP_tutorial/03-standard-form.php
-#RewriteRule ^PHP_tutorial/person-(.*)$ PHP_tutorial/PersonResource.php?id=$1
-
+RewriteBase /epita_php/
+RewriteRule ^login$ app/views/Login.php
+RewriteRule ^logout$ app/views/Logout.php
+RewriteRule ^teams$ app/views/TeamView.php
+RewriteRule ^team/id-(.*)$ app/views/TeamView.php?id=$1
+RewriteRule ^team/edit/id-(.*)$ app/views/TeamEdit.php?id=$1
+RewriteRule ^team/new/pid-(.*)$ app/views/TeamCreate.php?projectId=$1
+RewriteRule ^team/member/id-(.*)$ app/views/TeamMember.php?id=$1

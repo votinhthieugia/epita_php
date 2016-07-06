@@ -12,6 +12,7 @@ $team_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamReso
 $team = RestApiCall::do_get($team_url);
 
 if (count($team) > 0) {
+  // Check owner.
   $members = array();
   $team_member_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamMemberResource.php?";
   for ($i = 0; $i < count($team); $i++) {
@@ -21,7 +22,10 @@ if (count($team) > 0) {
     );
     $members[$i] = RestApiCall::do_get($team_member_url.http_build_query($data));
   }
+
+  include("./template/header.html");
   include("./template/team.html");
+  include("./template/footer.html");
 } else {
   print "No team found!";
 }

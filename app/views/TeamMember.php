@@ -4,6 +4,7 @@ include("LoginCheck.php");
 
 switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":
+    include("./template/header.html");
     $team_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamResource.php?id=".$_GET["id"];
     $team = RestApiCall::do_get($team_url);
 
@@ -26,12 +27,13 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     } else {
       print "No team found!";
     }
+    include("./template/footer.html");
     break;
   case "POST":
     $is_delete = $_POST["delete"];
     $team_member_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamMemberResource.php?team_id=".$_POST["team_id"];
     $data = array(
-      "owner_id" => 1,
+      "owner_id" => $_SESSION['login_id'],
       "student_id" => $_POST["student_id"]
     );
     if (isset($is_delete)) {

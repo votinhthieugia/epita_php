@@ -4,6 +4,7 @@ include("LoginCheck.php");
 
 switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":
+    include("./template/header.html");
     if (isset($_GET["id"])) {
       $team_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamResource.php?id=".$_GET["id"];
       $team = RestApiCall::do_get($team_url);
@@ -21,10 +22,11 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     } else {
       print "No team specified!";
     }
+    include("./template/footer.html");
     break;
   case "POST":
     $team_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamResource.php?id=".$_POST["teamId"];
-    $ownerId = 1;//$_SESSION['login_id'];
+    $ownerId = $_SESSION['login_id'];
     $data = array(
       "ownerId" => $ownerId,
       "summary" => $_POST["summary"]

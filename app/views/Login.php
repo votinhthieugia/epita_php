@@ -2,11 +2,14 @@
 session_start();
 require_once("../lib/RestApiCall.php");
 
+
 $messages = array();
 
 switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":
+    include("./template/header.html");
     include("./template/login.html");
+    include("./template/footer.html");
     break;
   case "POST":
     $person = do_login();

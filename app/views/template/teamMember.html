@@ -1,26 +1,166 @@
 <h3>Members</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</td>
+      <th>Project Id</td>
+      <th>Owner Id</td>
+      <th>Summary</td>
+      <th>Created At</td>
+      <th>Member</td>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    $columns = ['team_id', 'project_id', 'owner_id', 'summary', 'created_at'];
+    print "<tr>";
+    foreach($columns as $col) {
+      print "<td>";
+      print $team[$col];
+      print "</td>";
+    }
+
+    print "<td>";
+    $member = $members[$i];
+    $count = count($members);
+    for ($j = 0; $j < $count; $j++) {?>
+      <a href="/epita_php/app/views/PersonView.php?id=<?= $members[$j]['person_id'] ?>"><?=$members[$j]["first_name"]?></a>
+      <?php 
+      if ($j < $count - 1) {
+        print ", ";
+      }
+    }
+    print "</td>";
+    print "</tr>";
+    ?>
+  </tbody>
+</table>
+
+<div id="members-to-remove" class="col-sm-6">
+<h4>Remove</h4>
+<form method="post" action="" id="remove-form">
+    <input id="team_id" type="hidden" name="team_id" value="<?=$team['team_id'] ?>" />
+    <div id="remove-students">
 <?php
 $count = count($members);
 for ($j = 0; $j < $count; $j++) {?>
-  <form method="post" action="">
     <input type="hidden" name="delete" value="true"/>
-    <input type="hidden" name="team_id" value="<?=$team['team_id'] ?>" />
-    <input type="hidden" name="student_id" value="<?= $members[$j]['person_id'] ?>" />
-    <?= $members[$j]["first_name"] ?>
-    <input type="submit" value="Delete"/>
-  </form>
+    <div id="remove_student_<?=$members[$j]['person_id'] ?>">
+      <input type="radio" name="student_id" value="<?= $members[$j]['person_id'] ?>" /><span id="student_name_<?= $members[$j]['person_id'] ?>">  <?= $members[$j]["first_name"] ?></span>
+  </div>
   <?php
   }
 ?>
+</div>
+    <input type="button" class="btn btn-primary" value="Delete" onclick="removeMember();"/>
+</form>
+</div>
+
+<div id="members-to-add" class="col-sm-6">
+<h4>Add</h4>
+<form method="post" action="" id="add-form">
+  <input id="team_id" type="hidden" name="team_id" value="<?=$team['team_id']?>" />
+  <div id="add-students">
 <?php
 $count = count($available_students);
 for ($j = 0; $j < $count; $j++) {?>
-<form method="post" action="">
-  <input type="hidden" name="team_id" value="<?=$team['team_id']?>" />
-  <input type="hidden" name="student_id" value="<?= $available_students[$j]['person_id'] ?>" />
-  <?= $available_students[$j]["first_name"] ?>
-  <input type="submit" value="Add" />
-</form>
+<div id="add_student_<?=$available_students[$j]['person_id'] ?>">
+  <input type="radio" name="student_id" value="<?= $available_students[$j]['person_id'] ?>" /><span id="student_name_<?= $available_students[$j]['person_id'] ?>">  <?= $available_students[$j]["first_name"] ?></span>
+</div>
 <?php 
 }
 ?>
+</div>
+  <input type="button" class="btn btn-primary" value="Add" onclick="addMember();"/>
+</form>
+</div>
+<script>
+  var add_id = "";
+  var add_first_name = "";
+  var remove_id = "";
+  var remove_first_name = "";
+  function removeMember() {
+    var team_id = $('#team_id').val();
+    var student_id;
+    var inputs = document.querySelectorAll("#remove-form input");
+    var shouldRemove = false;
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].type=='radio' && inputs[i].name == 'student_id' && inputs[i].checked==true) {
+        student_id = inputs[i].value;
+        shouldRemove = true;
+        break;
+      }
+    }
+    if (shouldRemove) {
+      remove_id = "remove_student_" + student_id;
+      remove_first_name = $('#student_name_' + student_id).html();
+      $.ajax({
+        type:"DELETE",
+        url:"/epita_php/app/resources/TeamMemberResource.php?team_id=" + team_id,
+        data: {
+          "owner_id" : <?= $_SESSION['login_id'] ?>,
+          "student_id" : student_id
+        },
+        success: onMemberRemoved
+      });
+    }
+  };
+  function addMember() {
+    var team_id = $('#team_id').val();
+    var student_id;
+    var inputs = document.querySelectorAll("#add-form input");
+    var shouldAdd = false;
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].type=='radio' && inputs[i].name == 'student_id' && inputs[i].checked==true) {
+        student_id = inputs[i].value;
+        shouldAdd = true;
+        break;
+      }
+    }
+    if (shouldAdd) {
+      add_id = "add_student_" + student_id;
+      add_first_name = $('#student_name_' + student_id).html();
+      $.ajax({
+        type:"POST",
+        url:"/epita_php/app/resources/TeamMemberResource.php?team_id=" + team_id,
+        data: {
+          "owner_id" : <?= $_SESSION['login_id'] ?>,
+          "student_id" : student_id
+        },
+        success: onMemberAdded
+      });
+    }
+  };
+
+  function onMemberAdded(data) {
+    $('#' + add_id).remove();
+    var div = document.createElement('div');
+    div.id = 'remove_student_' + add_id;
+    var radio = document.createElement('input');
+    radio.name = 'student_id';
+    radio.type = 'radio';
+    radio.value = add_id;
+    div.appendChild(radio);
+    var span = document.createElement('span');
+    span.id = 'student_name_' + add_id;
+    span.innerHTML = add_first_name;
+    div.appendChild(span);
+    $('#remove-students').append(div);
+  }
+
+  function onMemberRemoved(data) {
+    $('#' + remove_id).remove();
+    var div = document.createElement('div');
+    div.id = 'add_student_' + remove_id;
+    var radio = document.createElement('input');
+    radio.name = 'student_id';
+    radio.type = 'radio';
+    radio.value = remove_id;
+    div.appendChild(radio);
+    var span = document.createElement('span');
+    span.id = 'student_name_' + remove_id;
+    span.innerHTML = remove_first_name;
+    div.appendChild(span);
+    $('#add-students').append(div);
+  }
+</script>

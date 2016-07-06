@@ -1,5 +1,17 @@
-<form method="POST">
-  <div>Login: <input type="text" name="email" value=""/></div>
-  <div>Password: <input type="password" name="password" /></div>
-  <button type="submit">Submit</button>
+<div class="col-xs-6">
+<div id="error" class = "alert alert-danger" style="display:none"></div>
+<form action="" method="post" role="form" id="create-form" class="form-horizontal">
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label">Email:</label>
+    <div class="col-sm-10"><input type="text" class="form-control" name="email" id="email" /></div>
+  </div>
+  <div class="form-group">
+    <label for="password" class="col-sm-2 control-label">Password:</label>
+    <div class="col-sm-10"><input type="password" class="form-control" name="password" id="password" /></div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10 text-right">
+      <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+  </div>
 </form>

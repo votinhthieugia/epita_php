@@ -4,12 +4,12 @@
     print "Error Creating Team";
   }
 ?>
-<form method="post" action="">
+<form method="post" action="" class="form-horizontal">
   <input type="hidden" name="projectId" value="<?=$project['project_id'] ?>" />
-  Project: <?=$project['title']?>
+  <h4>Project: <?=$project['title']?></h4>
   <br/>
   Summary:</br>
-  <textarea name="summary" rows="4" cols="100"></textarea>
+  <textarea class="form-control" name="summary" rows="4" cols="100"></textarea>
   </br>
-  <input type="submit" value="Create" />
+  <input type="submit" class="btn btn-primary" value="Create" />
 </form>
