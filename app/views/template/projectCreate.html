@@ -1,22 +1,17 @@
 <h2>Create project</h2>
-<?php
-  //if ($error == true) {
-    //print "Error Creating project";
-  //}
-?>
-<form method="post" action="">
+<form method="post" action="" class="form-horizontal">
   <br/>
-  title:</br>
-  <input type="text" name="title" required>
+  Title:</br>
+  <input class="form-control" type="text" name="title" required>
   </br>
-  deadline:</br>
-  <input type="date" name="deadline" required>
+  Deadline:</br>
+  <input class="form-control" type="date" name="deadline" required>
   </br>
-  class:</br>
-  <input type="text" name="classId" required>
+  Class:</br>
+  <input class="form-control" type="text" name="classId" required>
   </br>
-  subject:</br>
-  <input type="text" name="subject" required>
+  Subject:</br>
+  <input class="form-control" type="text" name="subject" required>
   </br>
-  <input type="submit" value="Create" />
+  <input class="btn btn-primary" type="submit" value="Create" />
 </form>

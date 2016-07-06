@@ -1,16 +1,16 @@
 <h2>Edit Project</h2>
-<form method="post" action="">
+<form method="post" action="" class="form-horizontal">
   <input type="hidden" name="project_id" value="<?=$project['project_id'] ?>" />
   Project_id: <?=$project['project_id']?>
   <br/><br/>
-  title:</br>
-  <input type="text" name="title" value="<?=$project["title"] ?>" required>
+  Title:</br>
+  <input class="form-control" type="text" name="title" value="<?=$project["title"] ?>" required>
   </br>
-  deadline:</br>
-  <input type="date" name="deadline" value="<?=$newDate ?>" required>
+  Deadline:</br>
+  <input class="form-control" type="date" name="deadline" value="<?=$newDate ?>" required>
   </br>
-  subject:</br>
-  <input type="text" name="subject" required value="<?=$project["subject"] ?>">
+  Subject:</br>
+  <input class="form-control" type="text" name="subject" required value="<?=$project["subject"] ?>">
   </br>
-  <input type="submit" value="Update" />
+  <input class="btn btn-primary" type="submit" value="Update" />
 </form>

@@ -8,7 +8,9 @@ include("LoginCheck.php");
 
 switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":    
-      include("./template/projectCreate.html");
+    include('./template/header.html');
+    include("./template/projectCreate.html");
+    include('./template/footer.html');
     
     break;
   case $_SERVER["REQUEST_METHOD"]:    
