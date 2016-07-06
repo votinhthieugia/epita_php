@@ -47,5 +47,6 @@ Features PHP: Trainer
 Features PHP: Code structure
 -
 
-- **RestAPI:** Developed to simplify the callings to the webservices
-- **bootstrap**: Used to make the project more beautiful :)
+- **lib/RestApiCall.php:** Developed to simplify the callings to the webservices
+- **php_console/:** Used to debug the code
+- **html/css/bootstrap:** Used to make the project more beautiful :)
