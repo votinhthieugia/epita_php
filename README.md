@@ -25,7 +25,7 @@ Features Data Base:
 **file epita_php/sql/triggers_SP.sql:**
 
 - **validate_project_deadline:** Stored procedure to avoid duplication of trigger for insert and update
-- 
+
 
 Features PHP: Student
 -
