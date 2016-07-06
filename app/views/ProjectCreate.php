@@ -8,10 +8,10 @@ include("LoginCheck.php");
 
 switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":    
+  $classId = $_GET["class_id"];
     include('./template/header.html');
     include("./template/projectCreate.html");
-    include('./template/footer.html');
-    
+    include('./template/footer.html');    
     break;
   case $_SERVER["REQUEST_METHOD"]:    
     $project_url = "http://localhost/epita_php/app/resources/ProjectResource.php";
