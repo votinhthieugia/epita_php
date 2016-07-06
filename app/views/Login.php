@@ -32,7 +32,6 @@ function do_login() {
     $_SESSION["email"] = $person["email"];
     $_SESSION["password"] = $person["password"];
     if ($person["is_trainer"]) {
-      #header("Location: /epita_php/app/views/ProjectView.php");
       header("Location: /epita_php/app/views/ProjectView.php");
     } else {
       header("Location: /epita_php/app/views/TeamView.php");

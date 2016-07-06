@@ -26,6 +26,9 @@ if (!$is_all) { ?>
       foreach($columns as $col) {
         print "<td>";
         print $team[$i][$col];
+        if ($col == 'team_id') {?>
+          <a href="/epita_php/app/views/TeamEdit.php?id=<?= $team[$i][$col] ?>">Edit</a>
+        <?php }
         if ($col == 'project_id') {?>
           <a href="/epita_php/app/views/ProjectView.php?id=<?= $team[$i][$col] ?>">View Project</a> /
           <a href="/epita_php/app/views/TeamCreate.php?projectId=<?= $team[$i][$col] ?>">Create Team</a>
