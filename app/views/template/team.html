@@ -1,6 +1,6 @@
 <?php
 if (!$is_all) { ?>
-<div><a href="/epita_php/app/views/TeamView.php">All Teams</a></div><?php
+<div><a href="/epita_php/teams">All Teams</a></div><?php
 }
 ?>
 <table class="table">
@@ -27,11 +27,11 @@ if (!$is_all) { ?>
         print "<td>";
         print $team[$i][$col];
         if ($col == 'team_id') {?>
-          <a href="/epita_php/app/views/TeamEdit.php?id=<?= $team[$i][$col] ?>">Edit</a>
+          <a href="/epita_php/team/edit/id-<?= $team[$i][$col] ?>">Edit</a>
         <?php }
         if ($col == 'project_id') {?>
-          <a href="/epita_php/app/views/ProjectView.php?id=<?= $team[$i][$col] ?>">View Project</a> /
-          <a href="/epita_php/app/views/TeamCreate.php?projectId=<?= $team[$i][$col] ?>">Create Team</a>
+          <a href="/epita_php/project/id-<?= $team[$i][$col] ?>">View Project</a> /
+          <a href="/epita_php/team/new/pid-<?= $team[$i][$col] ?>">Create Team</a>
         <?php }
         print "</td>";
       }
@@ -40,11 +40,11 @@ if (!$is_all) { ?>
       $member = $members[$i];
       $count = count($member);
       for ($j = 0; $j < $count; $j++) {?>
-        <a href="/epita_php/app/views/PersonView.php?id=<?= $member[$j]['person_id'] ?>"><?=$member[$j]["first_name"]?></a>
+        <a href="/epita_php/person/id-<?= $member[$j]['person_id'] ?>"><?=$member[$j]["first_name"]?></a>
         <?php
           if (!$is_all) {
         ?>
-        / <a href="/epita_php/app/views/TeamMember.php?id=<?= $team[$i]['team_id'] ?>">Edit</a>
+        / <a href="/epita_php/team/member/id-<?= $team[$i]['team_id'] ?>">Edit</a>
         <?php 
         }
         if ($j < $count - 1) {
@@ -54,7 +54,7 @@ if (!$is_all) { ?>
       print "</td>";
       if ($is_all) {
         print "<td>";?>
-          <a href="/epita_php/app/views/TeamView.php?id=<?= $team[$i]['team_id'] ?>">Detail</a>
+          <a href="/epita_php/team/id-<?= $team[$i]['team_id'] ?>">Detail</a>
         <?php
         print "</td>";
       }

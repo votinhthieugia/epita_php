@@ -35,7 +35,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     if ($result == false) {
       $error = true;
     } else {
-      header("Location: /epita_php/app/views/TeamView.php?id=".$_POST["teamId"]);
+      header("Location: /epita_php/team/id-".$_POST["teamId"]);
     }
     break;
 }

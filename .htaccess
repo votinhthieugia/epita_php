@@ -19,4 +19,5 @@ RewriteRule ^project/id-(.*)$ app/views/ProjectView.php?id=$1
 RewriteRule ^projects$ app/views/ProjectView.php
 RewriteRule ^person/id-(.*)$ app/views/PersonView.php?id=$1
 RewriteRule ^project/edit/id-(.*)$ app/views/ProjectUpdate.php?id=$1
+#RewriteRule ^project/new/id-(.*)$ app/views/ProjectUpdate.php?id=$1
 

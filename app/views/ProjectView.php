@@ -55,7 +55,7 @@ END_FORM;
         print "<td>";
         if($_SESSION['login_id'] == $item->owner_id)
         {            
-            print "<a href=\"http://localhost/epita_php/app/views/ProjectUpdate.php?id=" . $item->project_id . "\">";
+            print "<a href=\"/epita_php/project/edit/id-" . $item->project_id . "\">";
             print $item->project_id;
             print "</a>";            
         }else{
@@ -66,12 +66,15 @@ END_FORM;
 		foreach($columns as $col) { 
 			print "<td>";
 			print $item->$col;
+      if ($col == 'class_id') {?>
+        <a href="/epita_php/app/views/ProjectCreate.php?class_id=<?= $item->$col ?>">Create Project</a><?php
+      }
 			print "</td>";
 		}
 		print "<td>";
 		if (isset($teams))
 			foreach($teams as $team) { 
-				print "<a href=\"http://localhost/epita_php/app/views/TeamView.php?id=" . $team->team_id . "\">";
+				print "<a href=\"/epita_php/team/id-" . $team->team_id . "\">";
 				print $team->team_id;
 				print "</a>";
 				print ", ";
@@ -81,7 +84,7 @@ END_FORM;
 		print "<td>";
 		if (isset($personsNotInTeam))
 			foreach($personsNotInTeam as $person) { 
-				print "<a href=\"http://localhost/epita_php/app/views/PersonView.php?id=" . $person->person_id . "\">";
+				print "<a href=\"/epita_php/person/id-" . $person->person_id . "\">";
 				print $person->first_name . " " . $person->last_name;
 				print "</a>";
 				print ", ";
@@ -95,7 +98,6 @@ print <<<END_FORM3
 	</tbody>
   </table>
   </div>
-   <a href=ProjectCreate.php>Create Project</a>
   </form>
 END_FORM3;
 }

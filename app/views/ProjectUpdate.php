@@ -44,7 +44,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     if ($result == false) {
       $error = true;
     } else {
-      header("Location: http://localhost/epita_php/app/views/ProjectView.php");
+      header("Location: /epita_php/projects");
     }
     break;
 }

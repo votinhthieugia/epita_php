@@ -28,7 +28,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
       $error = true;
     }else
     {
-        header("Location: http://localhost/epita_php/app/views/ProjectView.php");
+        header("Location: /epita_php/app/projects");
     }
     // Redirect to team list.
     

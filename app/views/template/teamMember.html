@@ -24,7 +24,7 @@
     $member = $members[$i];
     $count = count($members);
     for ($j = 0; $j < $count; $j++) {?>
-      <a href="/epita_php/app/views/PersonView.php?id=<?= $members[$j]['person_id'] ?>"><?=$members[$j]["first_name"]?></a>
+      <a href="/epita_php/person/id-<?= $members[$j]['person_id'] ?>"><?=$members[$j]["first_name"]?></a>
       <?php 
       if ($j < $count - 1) {
         print ", ";
@@ -35,7 +35,7 @@
     ?>
   </tbody>
 </table>
-<div><a href="/epita_php/app/views/TeamView.php?id=<?= $team['team_id'] ?>">Team Detail</a></div>
+<div><a href="/epita_php/team/id-<?= $team['team_id'] ?>">Team Detail</a></div>
 <div id="members-to-remove" class="col-sm-6">
 <h4>Remove</h4>
 <form method="post" action="" id="remove-form">
