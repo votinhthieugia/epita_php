@@ -6,15 +6,19 @@ BEFORE INSERT
 ON project
 FOR EACH ROW
 BEGIN
- IF NEW.created_at is null THEN
- set NEW.created_at = NOW();
- END IF;
- 
- IF NEW.deadline < NEW.created_at THEN
- SIGNAL SQLSTATE '45000'
- SET MESSAGE_TEXT='Deadline must be greater than creation date', MYSQL_ERRNO=3000;
- END IF;
+ CALL validate_project_deadline(NEW.created_at, NEW.deadline);
 END $
+
+DROP TRIGGER IF EXISTS before_project_update $
+CREATE TRIGGER before_project_update
+BEFORE UPDATE
+ON project
+FOR EACH ROW
+BEGIN
+ CALL validate_project_deadline(NEW.created_at, NEW.deadline);
+END $
+
+#---------------
 
 DROP TRIGGER IF EXISTS before_team_insert $
 CREATE TRIGGER before_team_insert 
