@@ -6,7 +6,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":
     include("./template/header.html");
     $projectId = $_GET["projectId"];
-    $project_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/ProjectResource.php?id=".$projectId;
+    $project_url = "http://localhost/epita_php/app/resources/ProjectResource.php?id=".$projectId;
     $project = RestApiCall::do_get($project_url);
     if (count($project) > 0) {
       $project = $project[0];
@@ -18,7 +18,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     include("./template/footer.html");
     break;
   case $_SERVER["REQUEST_METHOD"]:
-    $team_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamResource.php";
+    $team_url = "http://localhost/epita_php/app/resources/TeamResource.php";
     $ownerId = $_SESSION['login_id'];
     $data = array(
       "projectId" => $_POST["projectId"],

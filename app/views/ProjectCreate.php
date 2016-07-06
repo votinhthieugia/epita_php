@@ -14,7 +14,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     
     break;
   case $_SERVER["REQUEST_METHOD"]:    
-    $project_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/ProjectResource.php";
+    $project_url = "http://localhost/epita_php/app/resources/ProjectResource.php";
     $ownerId = $_SESSION['login_id'];
     $data = array(
       "ownerId" => $ownerId,
@@ -28,7 +28,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
       $error = true;
     }else
     {
-        header("Location: http://".$_SERVER["SERVER_NAME"]."/epita_php/app/views/ProjectView.php");
+        header("Location: http://localhost/epita_php/app/views/ProjectView.php");
     }
     // Redirect to team list.
     

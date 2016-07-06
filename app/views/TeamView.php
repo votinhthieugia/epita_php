@@ -8,13 +8,13 @@ if (isset($_GET["id"])) {
   $param = "id=".$_GET["id"];
   $is_all = false;
 }
-$team_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamResource.php?".$param;
+$team_url = "http://localhost/epita_php/app/resources/TeamResource.php?".$param;
 $team = RestApiCall::do_get($team_url);
 
 if (count($team) > 0) {
   // Check owner.
   $members = array();
-  $team_member_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamMemberResource.php?";
+  $team_member_url = "http://localhost/epita_php/app/resources/TeamMemberResource.php?";
   for ($i = 0; $i < count($team); $i++) {
     $data = array(
       "owner_id" => $team[$i]["owner_id"],

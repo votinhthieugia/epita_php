@@ -1,3 +1,8 @@
+<?php
+if (!$is_all) { ?>
+<div><a href="/epita_php/app/views/TeamView.php">All Teams</a></div><?php
+}
+?>
 <table class="table">
   <thead>
     <tr>
@@ -21,6 +26,10 @@
       foreach($columns as $col) {
         print "<td>";
         print $team[$i][$col];
+        if ($col == 'project_id') {?>
+          <a href="/epita_php/app/views/ProjectView.php?id=<?= $team[$i][$col] ?>">View Project</a> /
+          <a href="/epita_php/app/views/TeamCreate.php?projectId=<?= $team[$i][$col] ?>">Create Team</a>
+        <?php }
         print "</td>";
       }
 
@@ -29,7 +38,12 @@
       $count = count($member);
       for ($j = 0; $j < $count; $j++) {?>
         <a href="/epita_php/app/views/PersonView.php?id=<?= $member[$j]['person_id'] ?>"><?=$member[$j]["first_name"]?></a>
+        <?php
+          if (!$is_all) {
+        ?>
+        / <a href="/epita_php/app/views/TeamMember.php?id=<?= $team[$i]['team_id'] ?>">Edit</a>
         <?php 
+        }
         if ($j < $count - 1) {
           print ", ";
         }
@@ -46,3 +60,4 @@
     ?>
   </tbody>
 </table>
+

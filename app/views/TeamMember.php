@@ -5,14 +5,14 @@ include("LoginCheck.php");
 switch ($_SERVER["REQUEST_METHOD"]) {
   case "GET":
     include("./template/header.html");
-    $team_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamResource.php?id=".$_GET["id"];
+    $team_url = "http://localhost/epita_php/app/resources/TeamResource.php?id=".$_GET["id"];
     $team = RestApiCall::do_get($team_url);
 
     if (count($team) > 0) {
       // Check owner here.
       if (true) {
         $team = $team[0];
-        $team_member_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamMemberResource.php?";
+        $team_member_url = "http://localhost/epita_php/app/resources/TeamMemberResource.php?";
         $data = array(
           "owner_id" => $team["owner_id"],
           "team_id" => $team["team_id"]
@@ -31,7 +31,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     break;
   case "POST":
     $is_delete = $_POST["delete"];
-    $team_member_url = "http://".$_SERVER["SERVER_NAME"]."/epita_php/app/resources/TeamMemberResource.php?team_id=".$_POST["team_id"];
+    $team_member_url = "http://localhost/epita_php/app/resources/TeamMemberResource.php?team_id=".$_POST["team_id"];
     $data = array(
       "owner_id" => $_SESSION['login_id'],
       "student_id" => $_POST["student_id"]
